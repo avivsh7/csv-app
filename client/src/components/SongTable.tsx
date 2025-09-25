@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../index.css'
 import type { Song } from '../types/Song';
+import { songService } from '../services/songService';
 
 const SongTable: React.FC = () => {
   const [songs, setSongs] = useState<Song[]>([]);
@@ -10,8 +11,7 @@ const SongTable: React.FC = () => {
   useEffect(() => {
     const fetchSongs = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_LOCALHOST}/songs`);
-        const data: Song[] = await response.json();
+        const data: Song[] = await songService.fetchSongs();
         setSongs(data);
       } catch (err) {
         setError('Failed to fetch songs.');
